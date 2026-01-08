@@ -22,13 +22,16 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div 
-            className="flex items-center gap-2 cursor-pointer" 
+            className="flex items-center gap-3 cursor-pointer group" 
             onClick={() => onNavigate('home')}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-500 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-500 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:rotate-6 transition-all duration-300">
               ن
             </div>
-            <span className="text-2xl font-black text-gray-800 tracking-tight hidden sm:inline">نقرة</span>
+            <div className="flex flex-col items-start -space-y-1">
+              <span className="text-2xl font-black text-gray-900 tracking-tight hidden sm:inline">نقرة</span>
+              <span className="text-[11px] font-black text-blue-600 tracking-[0.2em] hidden sm:inline uppercase">Nakraa</span>
+            </div>
           </div>
 
           {/* Desktop Nav */}
@@ -37,8 +40,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
               <button
                 key={link.id}
                 onClick={() => onNavigate(link.id)}
-                className={`text-base font-medium transition-colors ${
-                  currentPage === link.id ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-600'
+                className={`text-base font-bold transition-all relative py-1 ${
+                  currentPage === link.id 
+                    ? 'text-blue-600 after:content-[""] after:absolute after:bottom-0 after:right-0 after:w-full after:h-0.5 after:bg-blue-600' 
+                    : 'text-gray-500 hover:text-blue-600'
                 }`}
               >
                 {link.label}
@@ -51,31 +56,31 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
             <div className="hidden lg:flex relative">
               <input
                 type="text"
-                placeholder="ابحث عن خدمة..."
-                className="bg-gray-50 border border-gray-200 rounded-full py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 text-sm"
+                placeholder="ابحث عن خدمة في نقرة..."
+                className="bg-gray-50 border border-gray-200 rounded-full py-2.5 px-10 focus:outline-none focus:ring-2 focus:ring-blue-500 w-72 text-sm transition-all focus:bg-white"
               />
-              <Search className="absolute right-3 top-2.5 text-gray-400 w-4 h-4" />
+              <Search className="absolute right-3.5 top-3 text-gray-400 w-4 h-4" />
             </div>
 
             <div className="flex items-center gap-2 sm:gap-4">
               <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors relative">
                 <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
               </button>
               <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
                 <MessageSquare className="w-5 h-5" />
               </button>
               <button 
                 onClick={() => onNavigate('profile')}
-                className="flex items-center gap-2 p-1.5 border border-gray-200 rounded-full hover:bg-gray-50 transition-all"
+                className="flex items-center gap-2 p-1 border border-gray-200 rounded-full hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">
                   <User className="w-4 h-4" />
                 </div>
               </button>
               <button 
                 onClick={() => onNavigate('login')}
-                className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-bold text-sm transition-shadow hover:shadow-lg"
+                className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-black text-sm transition-all hover:shadow-lg active:scale-95"
               >
                 أضف خدمة
               </button>
@@ -83,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
 
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden p-2 text-gray-600"
+              className="md:hidden p-2 text-gray-600 bg-gray-50 rounded-lg"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -94,15 +99,15 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 py-4 px-4 shadow-xl">
-          <div className="flex flex-col gap-4">
-            <div className="relative mb-2">
+        <div className="md:hidden bg-white border-t border-gray-100 py-6 px-4 shadow-2xl animate-in slide-in-from-top duration-300">
+          <div className="flex flex-col gap-5">
+            <div className="relative">
               <input
                 type="text"
                 placeholder="ابحث عن خدمة..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg py-2.5 px-10 focus:outline-none"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <Search className="absolute right-3 top-3 text-gray-400 w-4 h-4" />
+              <Search className="absolute right-3.5 top-3.5 text-gray-400 w-4 h-4" />
             </div>
             {navLinks.map((link) => (
               <button
@@ -111,8 +116,8 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
                   onNavigate(link.id);
                   setIsMenuOpen(false);
                 }}
-                className={`text-right py-2 text-lg font-medium border-b border-gray-50 ${
-                  currentPage === link.id ? 'text-blue-600' : 'text-gray-600'
+                className={`text-right py-3 px-4 text-lg font-bold rounded-xl transition-all ${
+                  currentPage === link.id ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 {link.label}
@@ -120,9 +125,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
             ))}
             <button 
                onClick={() => { onNavigate('login'); setIsMenuOpen(false); }}
-               className="bg-green-600 text-white py-3 rounded-xl font-bold mt-2 shadow-md"
+               className="bg-blue-600 text-white py-4 rounded-2xl font-black mt-2 shadow-lg shadow-blue-100 active:scale-95 transition-all"
             >
-              تسجيل الدخول
+              تسجيل الدخول / البدء
             </button>
           </div>
         </div>
